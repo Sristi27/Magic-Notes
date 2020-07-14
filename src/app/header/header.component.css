@@ -1,0 +1,18 @@
+mat-toolbar{
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+button:active{
+    color: lightblue;
+}
+
+a:active{
+    color:lightblue
+}

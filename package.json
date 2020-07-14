@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "serve": "nodemon server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -12,13 +13,18 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.3",
+    "@angular/cdk": "^10.0.1",
     "@angular/common": "~10.0.3",
     "@angular/compiler": "~10.0.3",
     "@angular/core": "~10.0.3",
     "@angular/forms": "~10.0.3",
+    "@angular/material": "^10.0.1",
     "@angular/platform-browser": "~10.0.3",
     "@angular/platform-browser-dynamic": "~10.0.3",
     "@angular/router": "~10.0.3",
+    "body-parser": "^1.19.0",
+    "mongoose": "^5.9.23",
+    "nodemon": "^2.0.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
