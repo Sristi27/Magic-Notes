@@ -31,21 +31,28 @@ const storage = multer.diskStorage({
 
 router.get("", (req, res) => {
 
-    const pageSize = +req.query.pageSize;
-    const currentPage = +req.query.currentPage;
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
     const postQuery = Post.find();
+    let fetchedPosts;
     if (pageSize && currentPage) {
-        postQuery.skip(pageSize * (currentPage-1)) //skipping pages
-        .limit(pageSize);   //limiting
+        postQuery.skip(pageSize * (currentPage - 1)) //skipping pages
+            .limit(pageSize);   //limiting
     }
-   postQuery.then(
+    postQuery.then(
         documents => {
+            fetchedPosts = documents;
+            return Post.count();
+
+        }).then(count => {
             res.status(200).json({
                 message: 'Saved',
-                posts: documents
-            });
-        })
-});
+                posts: fetchedPosts
+
+            })
+        });
+})
+
 
 router.post('', multer({ storage: storage }).single('image'), (req, res) => {
     //image prop from the req body

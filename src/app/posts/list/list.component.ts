@@ -13,7 +13,7 @@ export class ListComponent implements OnInit {
 
   posts: Post[] = [];
   private postsSub: Subscription;
-  totalPosts=10;
+  totalPosts=0;
   currentPage=1;
   postsPerPage=2;
 
@@ -22,8 +22,9 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getAllPosts(this.postsPerPage,this.currentPage);
     this.postsSub = this.postService.getPostUpdateListener().subscribe(
-      (posts: Post[]) => {
-        this.posts = posts;
+      (postData:{posts:Post[],postCount:number}) => {
+        this.posts = postData.posts;
+        this.totalPosts=postData.postCount
       }
     )
   } 
@@ -35,7 +36,11 @@ export class ListComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.postService.deletePost(id);
+    this.postService.deletePost(id).subscribe(
+      ()=>{
+        this.postService.getAllPosts(this.postsPerPage,this.currentPage);
+      }
+    );
   }
 
   ngOnDestroy() {
