@@ -1,10 +1,44 @@
-const express=require('express');
+const express = require('express');
 const Post = require('../model/post');
 const http = require('http');
-const router=express.Router();
+const multer = require('multer');
+
+const router = express.Router();
+
+const MIME_TYPE = {
+    'image/png': 'png',
+    'image/jpeg': 'jpeg',
+    'image/jpg': 'jpg',
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+
+        const isValid = MIME_TYPE[file.mimetype];
+        let error = new Error("Invalid");
+        if (isValid) {
+            error = null;
+        }
+        cb(error, "backend/images");//relative to server.js
+    },
+    filename: (req, file, cb) => {
+        const name = file.originalname.toLowerCase().split(' ').join('-');
+        const ext = MIME_TYPE[file.mimetype];
+        cb(null, name + '-' + Date.now() + '.' + ext);
+    }
+})
+
 
 router.get("", (req, res) => {
-    Post.find().then(
+
+    const pageSize = +req.query.pageSize;
+    const currentPage = +req.query.currentPage;
+    const postQuery = Post.find();
+    if (pageSize && currentPage) {
+        postQuery.skip(pageSize * (currentPage-1)) //skipping pages
+        .limit(pageSize);   //limiting
+    }
+   postQuery.then(
         documents => {
             res.status(200).json({
                 message: 'Saved',
@@ -13,15 +47,23 @@ router.get("", (req, res) => {
         })
 });
 
-router.post('', (req, res) => {
+router.post('', multer({ storage: storage }).single('image'), (req, res) => {
+    //image prop from the req body
+    const url = req.protocol + "://" + req.get("host");
     const post = new Post({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: url + "/images/" + req.file.filename
+
     });
     post.save().then((result) => {
         res.status(201).json({
             message: "Post Added",
-            postId: result._id
+            post: {
+                ...result,
+                id: result._id
+
+            }
         })
     }).catch(
         () => {
@@ -30,12 +72,21 @@ router.post('', (req, res) => {
     );
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', multer({ storage: storage }).single('image'), (req, res) => {
+
+    let imagePath = req.body.imagePath;
+    if (req.file) {
+        const url = req.protocol + "://" + req.get("host");
+        imagePath = url + "/images/" + req.file.filename
+
+    }
     const post = new Post({
         _id: req.body.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        imagePath: imagePath
     });
+    console.log(post)
     Post.updateOne({ _id: req.params.id }, post).then(
         result => {
             console.log(result);
@@ -76,4 +127,4 @@ router.delete('/:id', (req, res) => {
 
 })
 
-module.exports=router;
+module.exports = router;

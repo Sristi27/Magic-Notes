@@ -4,3 +4,13 @@ mat-accordion,.noposts{
     display:block;
     margin:20px auto;
 }
+
+.postImage img{
+
+    height:400px;
+    width:100%;
+    box-shadow: 1px 1px 8px rgb(0,0,0,0.5);
+}
+mat-paginator{
+    margin-bottom:5px;
+}

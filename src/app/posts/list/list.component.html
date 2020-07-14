@@ -1,8 +1,17 @@
-<mat-accordion multi="true" *ngIf="posts.length>0">
+<mat-paginator *ngIf="posts.length>0"
+    [length]="totalPosts" 
+    [pageSize]="postsPerPage" 
+    [pageSizeOptions]="[1,2,5,10]" (page)="onPageChanged($event)"></mat-paginator>
+
+    <mat-accordion multi="true" *ngIf="posts.length>0">
     <mat-expansion-panel *ngFor="let post of posts">
         <mat-expansion-panel-header>
             {{post.title}}
         </mat-expansion-panel-header>
+        <div class="postImage">
+            <img [src]="post.imagePath" [alt]="post.title">
+        </div>
+
         <p>{{post.content}}</p>
         <mat-action-row>
             <a [routerLink]="['/edit',post.id]"><button mat-button color="primary">Edit</button></a>
@@ -10,5 +19,6 @@
         </mat-action-row>
     </mat-expansion-panel>
 </mat-accordion>
+
 
 <p class="noposts mat-body-1" style="text-align: center;" *ngIf="posts.length==0">No posts added!</p>
