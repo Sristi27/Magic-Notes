@@ -1,27 +1,29 @@
 <mat-card>
-    <form (submit)="onAddPost(f)" #f="ngForm">
+    <form [formGroup]="form" (submit)="onAddPost()">
+
         <mat-form-field>
             <mat-label>Title</mat-label>
-            <input matInput type="text" 
-            name="title" 
-            #title
-            [ngModel]="post?.title"
-            required>
-            <mat-error *ngIf="title.invalid">Please Enter a Title!</mat-error>
+            <input matInput type="text" formControlName="title" minlength="3">
+            <mat-error *ngIf="form.get('title').invalid">Please Enter a Title!</mat-error>
         </mat-form-field>
+
         <!-- #means we can use in this html only -->
         <!-- [(ngModel)]=two way
         [value]="something" property -->
 
+        <div>
+            <button type="button" mat-stroked-button (click)="file.click()">Pick Image</button>
+            <input type="file" #file (change)="onImagePicked($event)">
+        </div>
+        <div class="imagePreview" *ngIf="imagePreview!='' && imagePreview">
+            <img [src]="imagePreview" [alt]="form.value.title">
+        </div>
+
         <mat-form-field>
             <mat-label>Content</mat-label>
-            <textarea matInput rows="3" 
-            name="content" 
-            #content
-            [ngModel]="post?.content"
-            required>
+            <textarea matInput rows="3" formControlName="content">
         </textarea>
-        <mat-error *ngIf="content.invalid">Please Enter a Content!</mat-error>
+            <mat-error *ngIf="form.get('content').invalid">Please Enter a Content!</mat-error>
         </mat-form-field>
         <mat-card-actions>
             <button mat-raised-button color="primary" type="submit">Save post</button>

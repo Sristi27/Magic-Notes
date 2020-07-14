@@ -12,3 +12,15 @@ mat-form-field{
  mat-card-actions{
      margin-left:2px;
  }
+
+ input[type="file"]{
+     visibility: hidden;
+ }
+ .imagePreview{
+
+    height:90px;
+    margin:1 rem 0;
+ }
+ .imagePreview img{
+     height: 100%;
+ }
