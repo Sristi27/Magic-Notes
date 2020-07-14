@@ -15,7 +15,7 @@
             <button type="button" mat-stroked-button (click)="file.click()">Pick Image</button>
             <input type="file" #file (change)="onImagePicked($event)">
         </div>
-        <div class="imagePreview" *ngIf="imagePreview!='' && imagePreview">
+        <div class="imagePreview" *ngIf="imagePreview!='' && imagePreview && form.get('image').valid">
             <img [src]="imagePreview" [alt]="form.value.title">
         </div>
 
