@@ -16,6 +16,7 @@ export class ListComponent implements OnInit {
   private postsSub: Subscription;
   totalPosts=0;
   currentPage=1;
+  userId :string;
   postsPerPage=2;
   authListener: Subscription;
   status: boolean = false;
@@ -24,19 +25,23 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.userId=this.authService.getUserId();
     this.status=this.authService.isAuth();
     this.authListener = this.authService.getAuthStatus().subscribe(
       loggedIn => {
         this.status = loggedIn;
+        this.userId=this.authService.getUserId();
       }
     )
     this.postService.getAllPosts(this.postsPerPage,this.currentPage);
     this.postsSub = this.postService.getPostUpdateListener().subscribe(
       (postData:{posts:Post[],postCount:number}) => {
         this.posts = postData.posts;
-        this.totalPosts=postData.postCount
+        this.totalPosts=postData.postCount;
+        
       }
     )
+  
   } 
 
   onPageChanged(pageData:PageEvent){

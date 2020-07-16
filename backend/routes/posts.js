@@ -62,7 +62,8 @@ router.post('',checkAuth, multer({ storage: storage }).single('image'), (req, re
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
-        imagePath: url + "/images/" + req.file.filename
+        imagePath: url + "/images/" + req.file.filename,
+        creator: req.userData.userId
 
     });
     post.save().then((result) => {
@@ -82,6 +83,7 @@ router.post('',checkAuth, multer({ storage: storage }).single('image'), (req, re
 })
 
 router.put('/:id', checkAuth,multer({ storage: storage }).single('image'), (req, res) => {
+//only thhe user who has created it can edit it
 
     let imagePath = req.body.imagePath;
     if (req.file) {
@@ -93,15 +95,23 @@ router.put('/:id', checkAuth,multer({ storage: storage }).single('image'), (req,
         _id: req.body.id,
         title: req.body.title,
         content: req.body.content,
-        imagePath: imagePath
+        imagePath: imagePath,
+        creator:req.userData.userId
     });
     console.log(post)
-    Post.updateOne({ _id: req.params.id }, post).then(
+    Post.updateOne({ _id: req.params.id,creator:req.userData.userId}, post).then(
         result => {
-            console.log(result);
-            res.status(200).json({
+            if(result.nModified>0){
+                res.status(200).json({
                 message: "Updated"
-            })
+            });}
+            
+            else{
+                res.status(401).json({
+                    message: "Not Updated"
+                });
+
+            }
         }
     )
 
@@ -124,12 +134,17 @@ router.get('/:id', (req, res) => {
 
 
 router.delete('/:id', checkAuth,(req, res) => {
-    Post.deleteOne({ _id: req.params.id }).then(
+    Post.deleteOne({ _id: req.params.id ,creator:req.userData.userId}).then(
         response => {
-            console.log(response);
+           if(response.n>0)
             res.status(200).json({
                 message: "Deleted"
             });
+            else{
+                res.status(401).json({
+                    message: "Not Deleted"
+                });
+            }
         }
     )
         ;

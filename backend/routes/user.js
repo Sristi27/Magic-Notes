@@ -50,7 +50,7 @@ router.post("/login", (req, res, next) => {
                 'secret!!!',
                 { expiresIn: '1h' });
             res.status(200).json(
-                {message: "Successfull",token: token,expiresIn:3600}
+                {message: "Successfull",token: token,expiresIn:3600,userId:fetchedUser._id}
                 )
             }).
         catch(err => {
