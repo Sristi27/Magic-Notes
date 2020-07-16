@@ -3,6 +3,7 @@ import { PostsService } from '../services/posts.service';
 import { Post } from '../model/post.model';
 import { Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-list',
@@ -16,10 +17,19 @@ export class ListComponent implements OnInit {
   totalPosts=0;
   currentPage=1;
   postsPerPage=2;
+  authListener: Subscription;
+  status: boolean = false;
 
-  constructor(private postService: PostsService) { }
+  constructor(private postService: PostsService,private authService:AuthService) { }
 
   ngOnInit(): void {
+
+    this.status=this.authService.isAuth();
+    this.authListener = this.authService.getAuthStatus().subscribe(
+      loggedIn => {
+        this.status = loggedIn;
+      }
+    )
     this.postService.getAllPosts(this.postsPerPage,this.currentPage);
     this.postsSub = this.postService.getPostUpdateListener().subscribe(
       (postData:{posts:Post[],postCount:number}) => {

@@ -4,10 +4,12 @@ mat-accordion,.noposts{
     display:block;
     margin:20px auto;
 }
-
+.postImage{
+    width:90%;
+}
 .postImage img{
 
-    height:400px;
+    height:350px;
     width:100%;
     box-shadow: 1px 1px 8px rgb(0,0,0,0.5);
 }

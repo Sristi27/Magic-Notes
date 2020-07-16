@@ -49,8 +49,10 @@ router.post("/login", (req, res, next) => {
             const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id },
                 'secret!!!',
                 { expiresIn: '1h' });
-            res.status(200).json({message: "Successfull",token: token});
-        }).
+            res.status(200).json(
+                {message: "Successfull",token: token,expiresIn:3600}
+                )
+            }).
         catch(err => {
                 return res.status(401).json({ message: "Auth Failed" });
 

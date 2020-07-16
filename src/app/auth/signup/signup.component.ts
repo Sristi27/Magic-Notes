@@ -9,12 +9,14 @@ import {AuthService} from '../auth.service';
 })
 export class SignupComponent implements OnInit {
 
+  isLoading=false;
   constructor(public authService:AuthService) { }
 
   ngOnInit(): void {
   }
   onSignUp(f:NgForm){
    this.authService.createUser(f.value.email,f.value.password);
+   this.isLoading=true;
   }
 
 }

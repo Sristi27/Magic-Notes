@@ -13,7 +13,7 @@
         </div>
 
         <p>{{post.content}}</p>
-        <mat-action-row>
+        <mat-action-row *ngIf="status">
             <a [routerLink]="['/edit',post.id]"><button mat-button color="primary">Edit</button></a>
             <button mat-button color="warn" (click)="onDelete(post.id)">Delete</button>
         </mat-action-row>

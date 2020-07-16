@@ -1,25 +1,31 @@
 <div class="center">
 <mat-card class="mat-elevation-z2">
-    <mat-card-title style="text-align: center;">Login</mat-card-title>
+    
+    <mat-card-title style="text-align: center;"  *ngIf="!isLoading">Login</mat-card-title>
+
+    <mat-spinner *ngIf="isLoading" diameter="40"></mat-spinner>
+
     <form #f="ngForm" (submit)="onLogin(f)">
 
-        <mat-form-field>
+        <mat-form-field *ngIf="!isLoading">
             <mat-label>Enter your Email Address</mat-label>
             <input matInput type="email" name="email" ngModel #emailInput="ngModel" required email>
             <!-- #email [(ngModel)]="email" -->
             <mat-error *ngIf="emailInput.invalid">Please Enter a Valid Email!</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field  *ngIf="!isLoading">
             <mat-label>Enter your Password</mat-label>
             <input matInput type="password"  name="password" ngModel  #passwordInput="ngModel"required >
            
             <mat-error *ngIf="passwordInput.invalid">Please Enter a valid password!</mat-error>
         </mat-form-field>
         <mat-card-actions align="end">
-            <button mat-raised-button color="primary" type="submit">Login</button>
+            <button mat-raised-button color="primary" type="submit" *ngIf="!isLoading">Login</button>
         </mat-card-actions>
-        <button style="width: 100%;" mat-raised-button color="primary" type="button" routerLink="/signup">Sign Up</button>
+        <!-- <button mat-raised-button color="primary" type="button" routerLink="/signup">Sign Up</button> -->
+     
     </form>
+   
 </mat-card>
 </div>

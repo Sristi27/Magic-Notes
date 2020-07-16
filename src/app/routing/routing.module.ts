@@ -5,13 +5,14 @@ import {ListComponent} from '../posts/list/list.component';
 import {CreateComponent} from '../posts/create/create.component';
 import {LoginComponent} from  '../auth/login/login.component';
 import {SignupComponent} from  '../auth/signup/signup.component';
+import {AuthGuard} from '../auth/auth-guard.guard'
 
 
 const routes:Routes=[
   {path:'',component:ListComponent},
   {path:'login',component:LoginComponent},
-  {path:'create',component:CreateComponent},
-  {path:'edit/:postId',component:CreateComponent},
+  {path:'create',component:CreateComponent,canActivate:[AuthGuard]},
+  {path:'edit/:postId',component:CreateComponent,canActivate:[AuthGuard]},
   {path:'signup',component:SignupComponent}
 ]
 
@@ -23,6 +24,7 @@ const routes:Routes=[
     CommonModule,
     RouterModule.forRoot(routes)
   ],
-  exports:[RouterModule]
+  exports:[RouterModule],
+  providers:[AuthGuard]
 })
 export class RoutingModule { }
