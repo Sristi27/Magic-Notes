@@ -3,6 +3,7 @@ const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 const path=require('path');
 const postRoutes=require('./routes/posts');
+const userRoutes=require('./routes/user');
 
 mongoose.connect(
     //"mongodb+srv://app-user:9883362850@cluster0-5meyd.mongodb.net/students?retryWrites=true&w=majority",
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 )
 
 app.use("/api/posts",postRoutes);
+app.use("/api/user",userRoutes);
 
 
 module.exports = app;

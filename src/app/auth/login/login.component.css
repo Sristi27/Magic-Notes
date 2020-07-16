@@ -1,0 +1,22 @@
+mat-card{
+    
+    display:block;
+    width:80%;
+     margin:auto;
+}
+
+.center{
+    position: absolute;
+    width:50%;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+form{
+    width:80%;
+    margin:0 auto;
+    margin-top: 20px;
+}
+mat-form-field{
+    width:100%;
+}

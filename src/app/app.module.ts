@@ -9,13 +9,17 @@ import{FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material/material.module'
 import {RoutingModule} from './routing/routing.module'
 import {HttpClientModule} from '@angular/common/http';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     CreateComponent,
-    ListComponent
+    ListComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

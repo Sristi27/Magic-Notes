@@ -16,3 +16,11 @@ button:active{
 a:active{
     color:lightblue
 }
+
+.right{
+    display: flex;
+    justify-content: center;
+}
+a{
+    margin-right:5px;
+}
