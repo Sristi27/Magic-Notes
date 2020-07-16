@@ -19,15 +19,15 @@ router.post("/signup", (req, res, next) => {
 
             user.save().then((result) => {
                 res.status(201).json({
-                    message: "USer Created",
+                    message: "User Created",
                     result: result
-                }).catch(err => {
+                })
+            }).catch(err => {
                     res.status(404).json({
                         message: "Error",
                         error: err
                     })
-                })
-            });
+                });
         }
     );
 })

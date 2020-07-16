@@ -26,7 +26,7 @@ app.use( "/images",express.static(path.join("backend/images")))  //gives access 
 app.use((req, res, next) => {
 
     res.setHeader('Access-Control-Allow-Origin', "*");
-    res.setHeader('Access-Control-Allow-Headers', 'Origin,Content-Type,Accept');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin,Content-Type,Accept,Authorization');
     res.setHeader('Access-Control-Allow-Methods', "GET,POST,DELETE,PATCH,PUT,OPTIONS");
     next();
 }

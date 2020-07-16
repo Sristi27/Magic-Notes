@@ -26,17 +26,6 @@ export class PostsService {
     this.http.post<{ message: string, post: Post }>(url, postData).subscribe(
       (res) => {
         this.router.navigate(['/']);
-        // const post: Post = {
-        //   id: res.post.id,
-        //   title: title,
-        //   content: content,
-        //   imagePath: res.post.imagePath
-
-        // };
-        // const id = res.post.id;
-        // post.id = id;
-        // this.posts.push(post);
-        // this.postsChanged.next([...this.posts]);
        
       });
   }
@@ -56,7 +45,6 @@ export class PostsService {
 
   updatePost(id: string, title: string, content: string, image: File | string) {
 
-    // const post = { id: id, title: title, content: content ,imagePath:null };
     let postData: FormData | Post;
     if (typeof (image) === 'object') {
       postData = new FormData();

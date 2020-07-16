@@ -8,9 +8,10 @@ import { ListComponent } from './posts/list/list.component';
 import{FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material/material.module'
 import {RoutingModule} from './routing/routing.module'
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import {AuthInterceptor} from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { SignupComponent } from './auth/signup/signup.component';
     FormsModule,MaterialModule,HttpClientModule,RoutingModule,
     BrowserAnimationsModule,ReactiveFormsModule
   ],
-  providers: [],
+  providers: [{provide:HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

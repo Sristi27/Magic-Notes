@@ -1,5 +1,6 @@
 const express = require('express');
 const Post = require('../model/post');
+const checkAuth= require("../middleware/check-auth");
 const http = require('http');
 const multer = require('multer');
 
@@ -53,8 +54,9 @@ router.get("", (req, res) => {
         });
 })
 
+//not allowed to post if not signed in
 
-router.post('', multer({ storage: storage }).single('image'), (req, res) => {
+router.post('',checkAuth, multer({ storage: storage }).single('image'), (req, res) => {
     //image prop from the req body
     const url = req.protocol + "://" + req.get("host");
     const post = new Post({
@@ -79,7 +81,7 @@ router.post('', multer({ storage: storage }).single('image'), (req, res) => {
     );
 })
 
-router.put('/:id', multer({ storage: storage }).single('image'), (req, res) => {
+router.put('/:id', checkAuth,multer({ storage: storage }).single('image'), (req, res) => {
 
     let imagePath = req.body.imagePath;
     if (req.file) {
@@ -121,7 +123,7 @@ router.get('/:id', (req, res) => {
 
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkAuth,(req, res) => {
     Post.deleteOne({ _id: req.params.id }).then(
         response => {
             console.log(response);
