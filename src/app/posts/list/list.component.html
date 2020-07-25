@@ -1,7 +1,7 @@
 <mat-paginator *ngIf="posts.length>0"
     [length]="totalPosts" 
     [pageSize]="postsPerPage" 
-    [pageSizeOptions]="[1,2,5,10]" (page)="onPageChanged($event)"></mat-paginator>
+    [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)"></mat-paginator>
 
     <mat-accordion multi="true" *ngIf="posts.length>0">
     <mat-expansion-panel *ngFor="let post of posts">

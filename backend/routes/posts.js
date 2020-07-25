@@ -48,7 +48,8 @@ router.get("", (req, res) => {
         }).then(count => {
             res.status(200).json({
                 message: 'Saved',
-                posts: fetchedPosts
+                posts: fetchedPosts,
+                maxPosts: count
 
             })
         });

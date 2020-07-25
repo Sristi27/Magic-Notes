@@ -89,10 +89,11 @@ return this.userId;
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
-    this.router.navigate(["/"]);
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.userId=null;
+    this.router.navigate(["/"]);
+    
   }
 
   autoAuthUser() {

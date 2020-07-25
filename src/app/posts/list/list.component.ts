@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   posts: Post[] = [];
   private postsSub: Subscription;
   totalPosts=0;
+  pageSizeOptions = [1, 2, 5, 10];
   currentPage=1;
   userId :string;
   postsPerPage=2;
@@ -26,13 +27,6 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
 
     this.userId=this.authService.getUserId();
-    this.status=this.authService.isAuth();
-    this.authListener = this.authService.getAuthStatus().subscribe(
-      loggedIn => {
-        this.status = loggedIn;
-        this.userId=this.authService.getUserId();
-      }
-    )
     this.postService.getAllPosts(this.postsPerPage,this.currentPage);
     this.postsSub = this.postService.getPostUpdateListener().subscribe(
       (postData:{posts:Post[],postCount:number}) => {
@@ -41,6 +35,14 @@ export class ListComponent implements OnInit {
         
       }
     )
+    this.status=this.authService.isAuth();
+    this.authListener = this.authService.getAuthStatus().subscribe(
+      loggedIn => {
+        this.status = loggedIn;
+        this.userId=this.authService.getUserId();
+      }
+    )
+    
   
   } 
 
